@@ -7,8 +7,8 @@
 const int Shuffle_Number = 1000;
 
 Deck::Deck() {
-	for (auto suit : suit_map) {
-		for (auto rank : rank_map) {
+	for (auto suit : suit_smap) {
+		for (auto rank : rank_smap) {
 			deck.push_back({ suit.first, rank.first });
 		}
 	}
@@ -26,7 +26,7 @@ void Deck::shuffle() {
 
 void Deck::print_deck() {
 	for (auto d : deck) {
-		std::cout << suit_map.find(d.suit)->second << rank_map.find(d.rank)->second << std::endl;
+		std::cout << suit_smap.find(d.suit)->second << rank_smap.find(d.rank)->second << std::endl;
 	}
 }
 

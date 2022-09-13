@@ -16,4 +16,6 @@ public:
 	void print_deck();
 	void draw_hand(int player_id);
 	void print_hand(int player_id);
+	void shuffle();
+	void check_hand(int player_id);
 };

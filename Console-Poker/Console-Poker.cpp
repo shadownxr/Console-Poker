@@ -12,8 +12,10 @@ int main()
     players.push_back(player1);
     Game game(players);
     game.print_deck();
+    game.shuffle();
     game.draw_hand(0);
     game.print_hand(0);
+    game.check_hand(0);
     
 }
 
