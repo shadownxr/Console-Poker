@@ -4,13 +4,23 @@
 #include <algorithm>
 
 void Player::print_hand() {
+	std::cout << "Hand: ";
+
 	for (auto h : hand) {
-		std::cout << "Hand: " << suit_smap.find(h.suit)->second << rank_smap.find(h.rank)->second << std::endl;
+		std::cout << suit_smap.find(h.suit)->second << rank_smap.find(h.rank)->second << " ";
 	}
+
+	std::cout << std::endl;
 }
 
 void Player::draw_hand(std::array<Card, 5> cards) {
 	hand = std::move(cards);
+}
+
+void Player::exchange(int card_number, Card new_card) {
+	if (card_number > 0 && card_number < 6) {
+		hand.at(card_number - 1) = new_card;
+	}
 }
 
 bool Player::isSameSuit() {
@@ -129,15 +139,37 @@ bool Player::isPair(CardCount cardCount) {
 	return false;
 }
 
-void Player::check_hand() {
+HandRank Player::getHandRank() {
 	CardCount cardCount = countCards();
-	isRoyalFlush(cardCount);
-	isStraightFlush(cardCount);
-	isFourOfAKind(cardCount);
-	isFullHouse(cardCount);
-	isFlush(cardCount);
-	isStraight(cardCount);
-	isThreeOfAKind(cardCount);
-	isTwoPair(cardCount);
-	isPair(cardCount);
+	if (isRoyalFlush(cardCount)) {
+		return HandRank::RoyalFlush;
+	}
+	else if (isStraightFlush(cardCount)) {
+		return HandRank::StraightFlush;
+	}
+	else if (isFourOfAKind(cardCount)) {
+		return HandRank::FourOfAKind;
+	}
+	else if (isFullHouse(cardCount)) {
+		return HandRank::FullHouse;
+	}
+	else if (isFlush(cardCount)) {
+		return HandRank::Flush;
+	}
+	else if (isStraight(cardCount)) {
+		return HandRank::Straight;
+	}
+	else if (isThreeOfAKind(cardCount)) {
+		return HandRank::ThreeOfAKind;
+	}
+	else if (isTwoPair(cardCount)) {
+		return HandRank::TwoPair;
+	}
+	else if (isPair(cardCount)) {
+		return HandRank::Pair;
+	}
+	else {
+		return HandRank::HighCard;
+	}
+
 }
