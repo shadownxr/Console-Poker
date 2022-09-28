@@ -11,7 +11,7 @@ void Game::print_deck() {
 }
 
 void Game::draw_hand(int player_id) {
-	Hand hand;
+	std::array<Card, 5> hand;
 
 	for (int i = 0; i < 5; ++i) {
 		hand.at(i) = deck.draw_a_card();
@@ -134,32 +134,37 @@ void Game::exchange_cards(int player_id, std::string choosen_cards) {
 }
 
 Action Game::player_action() {
-	//char action = getchar();
 	std::string action;
-	std::cin >> action;
 
-	if (action == "1") {
-		std::string choice;
+	do {
+		std::cin >> action;
 
-		std::cout << "Which cards: " << std::endl;
+		if (action.size() != 1) continue;
 
-		std::cin >> choice;
+		if (action == "1") {
+			std::string choice;
 
-		exchange_cards(0, choice);
+			std::cout << "Which cards: " << std::endl;
 
-		std::cout << "New ";
+			std::cin >> choice;
 
-		print_hand(0);
+			exchange_cards(0, choice);
 
-		std::cout << std::endl;
+			std::cout << "New ";
 
-		return Action::Exchange;
-	}
-	else if (action == "2") {
-		return Action::Keep;
-	}
-	else {
-		return Action::Keep;
-	}
+			print_hand(0);
+
+			std::cout << std::endl;
+
+			return Action::Exchange;
+		}
+		else if (action == "2") {
+			return Action::Keep;
+		}
+		else {
+			return Action::Keep;
+		}
+
+	} while (action.size() != 1);
 
 }
